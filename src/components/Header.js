@@ -35,6 +35,7 @@ export default function Header() {
         >
           Location Tracker
         </Link>
+
         <div className="hidden md:flex items-end md:space-x-3 justify-end w-1/2">
           {isLoggedIn ? (
             <div className="flex items-center">
@@ -50,6 +51,12 @@ export default function Header() {
                 className="bg-green-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Add Location
+              </Link>
+              <Link
+                to="/chat"
+                className="bg-blue-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+              >
+                Chat
               </Link>
               <button
                 type="button"
@@ -114,9 +121,10 @@ export default function Header() {
       {/* Menu content */}
       <div
         id="menuContent"
-        className={`overflow-hidden bg-white dark:bg-dark_green  block lg:hidden  transition-all duration-300 ${menuOpen
-          ? "h-screen visible pb-3 opacity-100 "
-          : "h-0 invisible opacity-0"
+        className={`overflow-hidden bg-white dark:bg-dark_green  block lg:hidden  transition-all duration-300 ${
+          menuOpen
+            ? "h-screen visible pb-3 opacity-100 "
+            : "h-0 invisible opacity-0"
         }`}
       >
         {isLoggedIn ? (

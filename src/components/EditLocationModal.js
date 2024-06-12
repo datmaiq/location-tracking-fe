@@ -1,15 +1,16 @@
 export default function EditLocationModal({
-                                            open,
-                                            handleCloseModal,
-                                            newLocationName,
-                                            initialLocationName,
-                                            handleInputChange,
-                                            handleLocationUpdate,
-                                          }) {
-  return (<div>
-      {open ? (<div
-          className="h-screen w-full bg-black bg-opacity-25 dark:bg-opacity-70 left-0 top-0 fixed z-[500] flex justify-center  items-center">
-          <div className="-mt-40 sm:w-[300px] bg-white dark:bg-dark_green rounded-2xl  py-3 px-5">
+  open,
+  handleCloseModal,
+  newLocationName,
+  initialLocationName,
+  handleInputChange,
+  handleLocationUpdate,
+}) {
+  return (
+    <div>
+      {open ? (
+        <div className="h-screen w-full bg-black bg-opacity-25 dark:bg-opacity-70 left-0 top-0 fixed z-[500] flex justify-center  items-center">
+          <div className="-mt-40 sm:w-[500px] bg-white dark:bg-dark_green rounded-2xl  py-3 px-5">
             <div className="flex justify-end mb-3">
               <button
                 type="button"
@@ -34,12 +35,14 @@ export default function EditLocationModal({
               </div>
               <button
                 type="submit"
-                className="text-black dark:text-white border border-green-500 w-fit font-black p-2 "
+                className="text-black dark:text-white border border-green-500 w-fit font-black p-2 ml-auto rounded-[10px]"
               >
-                update
+                Update
               </button>
             </form>
           </div>
-        </div>) : null}
-    </div>);
+        </div>
+      ) : null}
+    </div>
+  );
 }

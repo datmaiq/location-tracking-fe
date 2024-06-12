@@ -35,14 +35,14 @@ export default function MyFriendsMap() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${authToken}`,
           },
-        },
+        }
       );
       setFriends((prev) => [...prev, friend]);
       const newOthers = others.filter((others) => others._id !== friend?._id);
       setOthers(newOthers);
 
       toast.success(
-        `You have added ${friend.username} as friend! Check map above to see them.`,
+        `You have added ${friend.username} as friend! Check map above to see them.`
       );
     } catch (error) {
       const responseError = error?.response?.data?.message;
@@ -123,35 +123,35 @@ export default function MyFriendsMap() {
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              {friends?.length
+              {friends?.length > 0
                 ? friends?.map((friend) => (
-                  <Marker
-                    key={friend?.id}
-                    className="text-white dark:bg-red-500 leaflet-marker"
-                    position={[
-                      friend?.currentLocation?.latitude,
-                      friend?.currentLocation?.longitude,
-                    ]}
-                    icon={getMarkerIcon(friend?.profileBanner)}
-                  >
-                    <Popup className="">
-                      <div className="flex flex-col w-full">
-                        <div>
+                    <Marker
+                      key={friend?.id}
+                      className="text-white dark:bg-red-500 leaflet-marker"
+                      position={[
+                        friend?.currentLocation?.latitude | "",
+                        friend?.currentLocation?.longitude | "",
+                      ]}
+                      icon={getMarkerIcon(friend?.profileBanner)}
+                    >
+                      <Popup className="">
+                        <div className="flex flex-col w-full">
+                          <div>
                             <span className="font-bold text-green-500">
                               Name:{" "}
                             </span>
-                          <span>{friend?.username}</span>
-                        </div>
-                        <div>
+                            <span>{friend?.username}</span>
+                          </div>
+                          <div>
                             <span className="font-bold text-green-500">
                               current location:
                             </span>{" "}
-                          <span>{friend?.currentLocation?.name}</span>
+                            <span>{friend?.currentLocation?.name}</span>
+                          </div>
                         </div>
-                      </div>
-                    </Popup>
-                  </Marker>
-                ))
+                      </Popup>
+                    </Marker>
+                  ))
                 : null}
             </MapContainer>
           </div>
@@ -161,66 +161,66 @@ export default function MyFriendsMap() {
           <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {others?.length > 0
               ? others?.map((user) => (
-                <div
-                  key={user?._id}
-                  id={`friend-${user?._id}`}
-                  className="group h-48 w-full  relative z-10 rounded-2xl shadow-lg dark:shadow-black bg-[#f6f6f9]rounded-2xl dark:bg-dark_green transition-all duration-1000"
-                >
-                  <div className="group-hover:scale-105 group-hover:bg-[rgb(246,246,249)] bg-[#f6f6f9] dark:bg-dark_green dark:group-hover:bg-dark_green rounded-2xl absolute h-48 w-full z-20 transition-all duration-300 p-3 flex flex-col space-y-3" />
-                  <div className=" h-48 w-full  relative z-20 p-3 rounded-2xl ">
-                    <div className="flex h-full flex-col justify-between relative z-40 w-full">
-                      <div className="h-3/4 flex flex-col ">
-                        <Link
-                          to={`${window.location.origin}/profile/${user?.username}`}
-                          className="flex items-center"
-                        >
-                          <div>
-                            <img
-                              className="w-10 h-10 rounded-full"
-                              src={user?.profileBanner}
-                              alt="profile"
-                            />
-                          </div>
-                          <span className="ml-3  bg-gray-400 text-white py-1 px-2 rounded text-xs">
+                  <div
+                    key={user?._id}
+                    id={`friend-${user?._id}`}
+                    className="group h-48 w-full  relative z-10 rounded-2xl shadow-lg dark:shadow-black bg-[#f6f6f9]rounded-2xl dark:bg-dark_green transition-all duration-1000"
+                  >
+                    <div className="group-hover:scale-105 group-hover:bg-[rgb(246,246,249)] bg-[#f6f6f9] dark:bg-dark_green dark:group-hover:bg-dark_green rounded-2xl absolute h-48 w-full z-20 transition-all duration-300 p-3 flex flex-col space-y-3" />
+                    <div className=" h-48 w-full  relative z-20 p-3 rounded-2xl ">
+                      <div className="flex h-full flex-col justify-between relative z-40 w-full">
+                        <div className="h-3/4 flex flex-col ">
+                          <Link
+                            to={`${window.location.origin}/profile/${user?.username}`}
+                            className="flex items-center"
+                          >
+                            <div>
+                              <img
+                                className="w-10 h-10 rounded-full"
+                                src={user?.profileBanner}
+                                alt="profile"
+                              />
+                            </div>
+                            <span className="ml-3  bg-gray-400 text-white py-1 px-2 rounded text-xs">
                               {user?.username}
                             </span>
-                        </Link>
-                        <div className="text-xs mt-2">
+                          </Link>
+                          <div className="text-xs mt-2">
                             <span className="text-green-500">
                               current location:
                             </span>
-                          <span className="ml-3">
+                            <span className="ml-3">
                               {user?.currentLocation?.name}
                             </span>
-                        </div>
-                      </div>
-                      <div className="h-1/4 flex flex-col justify-end">
-                        <div className="flex justify-between items-center">
-                          <div className="flex space-x-5 text-xs">
-                            <div className="flex items-center space-x-1">
-                              <FaLocationDot className=" text-green-500" />
-                              <span>{user?.locations?.length}</span>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <CiUser className=" text-green-500" />
-                              <span>{user?.friends?.length}</span>
-                            </div>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              handleAddFriend(user);
-                            }}
-                            className="primary-button p-2 text-xs rounded-md flex items-center space-x-2 border border-green-500 cursor-pointer"
-                          >
-                            <FaUserCheck /> <span>add friend</span>
-                          </button>
+                        </div>
+                        <div className="h-1/4 flex flex-col justify-end">
+                          <div className="flex justify-between items-center">
+                            <div className="flex space-x-5 text-xs">
+                              <div className="flex items-center space-x-1">
+                                <FaLocationDot className=" text-green-500" />
+                                <span>{user?.locations?.length}</span>
+                              </div>
+                              <div className="flex items-center space-x-1">
+                                <CiUser className=" text-green-500" />
+                                <span>{user?.friends?.length}</span>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                handleAddFriend(user);
+                              }}
+                              className="primary-button p-2 text-xs rounded-md flex items-center space-x-2 border border-green-500 cursor-pointer"
+                            >
+                              <FaUserCheck /> <span>add friend</span>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))
+                ))
               : null}
           </div>
         </div>

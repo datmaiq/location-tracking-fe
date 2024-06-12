@@ -44,7 +44,6 @@ export default function Profile() {
                   className="border-border_color border p-2 rounded text-slate-400"
                 />
               </div>
-
               <div className="flex flex-col">
                 <label>Gender</label>
                 <select
@@ -57,10 +56,23 @@ export default function Profile() {
 
               <div className="flex flex-col">
                 <label className="">Current Location</label>
+                {authUser.currentLocation ? (
+                  <p className="p-2 border rounded text-slate-400">
+                    {authUser.currentLocation.name}
+                  </p>
+                ) : (
+                  <p className="p-2 border rounded text-slate-400">
+                    Location empty
+                  </p>
+                )}
+              </div>
+
+              {/* <div className="flex flex-col">
+                <label className="">Current Location</label>
                 <p className=" p-2 border rounded text-slate-400">
                   {authUser?.currentLocation?.name}
                 </p>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
