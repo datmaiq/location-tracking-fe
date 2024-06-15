@@ -8,10 +8,10 @@ const Message = () => {
   const { socket } = useContext(AppContext);
   const { authUser } = useAuth();
   const [message, setMessage] = useState("");
+  const [senderId, setSenderId] = useState("");
   const [chat, setChat] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [selectedFriend, setSelectedFriend] = useState(null);
-  const [userId, setUserId] = useState();
 
   const sendMessage = async () => {
     if (!selectedFriend) return;
@@ -30,21 +30,23 @@ const Message = () => {
       );
 
       setChat((prev) => [...prev, res.data]);
+      console.log(chat);
       setMessage("");
+
+      socket.emit("sendMessage", {
+        senderId: authUser._id,
+        receiverId: selectedFriend._id,
+        message: res.data,
+      });
     } catch (err) {
       console.error(err);
     }
   };
 
-  useEffect(() => {
-    socket.on("getMessage", (message) => {
-      console.log(message);
-    });
-
-    return () => {
-      socket.off("getMessage");
-    };
-  }, [socket]);
+  socket.on("getMessage", (message) => {
+    console.log(message);
+    setChat((prev) => [...prev, message]);
+  });
 
   const fetchMessages = async (chatId) => {
     try {
@@ -64,13 +66,10 @@ const Message = () => {
         `http://localhost:8000/chat/${authUser._id}/${friend._id}`
       );
       const chat = res.data;
-      setUserId(res?.data.users);
-      console.log(userId);
 
       if (chat) {
         fetchMessages(chat._id);
       } else {
-        // Create a new chat if one doesn't exist
         const newChatRes = await axios.post("http://localhost:8000/chat", {
           senderId: authUser._id,
           receiverId: friend._id,
@@ -83,7 +82,6 @@ const Message = () => {
     }
   };
 
-  console.log(authUser._id);
   return (
     <div className="min-h-screen bg-gray-100 flex">
       <div className="w-1/4 bg-white border-r">
@@ -96,7 +94,7 @@ const Message = () => {
           />
         </div>
         <ul className="p-4 h-full overflow-y-auto">
-          {authUser.friends.map((friend) => (
+          {authUser?.friends.map((friend) => (
             <li
               key={friend._id}
               className="flex items-center justify-between p-2 border-b cursor-pointer"
@@ -124,16 +122,23 @@ const Message = () => {
         </div>
         <div className="flex-1 p-4 overflow-y-auto">
           {chat.map((msg, index) => (
-            <div key={index} className="mb-4">
-              <div className="flex justify-end mb-2">
-                {userId === authUser._id ? (
-                  <div className="bg-blue-500 text-white p-2 rounded">
-                    {msg.message}
-                  </div>
+            <div
+              key={index}
+              className={`mb-4 flex ${
+                msg.senderId === authUser._id ? "justify-end" : "justify-start"
+              }`}
+            >
+              <div
+                className={`p-2 rounded ${
+                  msg.senderId === authUser._id
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-300"
+                }`}
+              >
+                {msg.senderId === authUser._id ? (
+                  msg.message
                 ) : (
-                  <div className="bg-gray-300 p-2 rounded">
-                    <strong>{selectedFriend.username}</strong>: {msg.message}
-                  </div>
+                  <>{msg.message}</>
                 )}
               </div>
             </div>
