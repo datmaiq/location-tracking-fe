@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import "../index.css";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import AppContext from "../utils/AppContext";
@@ -8,13 +7,13 @@ const Message = () => {
   const { socket } = useContext(AppContext);
   const { authUser } = useAuth();
   const [message, setMessage] = useState("");
-  const [senderId, setSenderId] = useState("");
   const [chat, setChat] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [selectedFriend, setSelectedFriend] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const sendMessage = async () => {
-    if (!selectedFriend) return;
+    if (!selectedFriend || message.trim() === "") return;
 
     const newMessage = {
       senderId: authUser._id,
@@ -30,7 +29,6 @@ const Message = () => {
       );
 
       setChat((prev) => [...prev, res.data]);
-      console.log(chat);
       setMessage("");
 
       socket.emit("sendMessage", {
@@ -43,10 +41,25 @@ const Message = () => {
     }
   };
 
-  socket.on("getMessage", (message) => {
-    console.log(message);
-    setChat((prev) => [...prev, message]);
-  });
+  useEffect(() => {
+    if (authUser) {
+      socket.emit("addUser", authUser.username);
+
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [authUser, socket]);
+
+  useEffect(() => {
+    socket.on("getMessage", (message) => {
+      setChat((prev) => [...prev, message]);
+    });
+
+    return () => {
+      socket.off("getMessage");
+    };
+  }, [socket]);
 
   const fetchMessages = async (chatId) => {
     try {
@@ -82,82 +95,100 @@ const Message = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
+  const filteredFriends = authUser?.friends.filter((friend) =>
+    friend.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <div className="min-h-screen bg-gray-100 flex">
-      <div className="w-1/4 bg-white border-r">
-        <div className="p-4 border-b">
+    <div className=" bg-gray-100 flex flex-col ">
+      <div className="w-full bg-white border-b p-4">
+        <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Chat</h2>
+        </div>
+      </div>
+      <div className="flex flex-1">
+        <div className="w-1/4 bg-white border-r overflow-y-auto">
           <input
             type="text"
             placeholder="Search"
-            className="mt-2 w-full p-2 border rounded"
+            className="mt-2 p-2 border rounded w-full"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
-        </div>
-        <ul className="p-4 h-full overflow-y-auto">
-          {authUser?.friends.map((friend) => (
-            <li
-              key={friend._id}
-              className="flex items-center justify-between p-2 border-b cursor-pointer"
-              onClick={() => handleUserClick(friend)}
-            >
-              <div className="flex items-center space-x-3">
-                <img
-                  src={friend.profileBanner}
-                  alt={friend.username}
-                  className="w-10 h-10 rounded-full object-cover"
-                />
-                <span>{friend.username}</span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="flex-1 bg-gray-50 flex flex-col">
-        <div className="flex items-center justify-between p-4 border-b bg-white">
-          <h2 className="text-xl font-semibold">
-            {selectedFriend
-              ? selectedFriend.username
-              : "Select a friend to chat"}
-          </h2>
-        </div>
-        <div className="flex-1 p-4 overflow-y-auto">
-          {chat.map((msg, index) => (
-            <div
-              key={index}
-              className={`mb-4 flex ${
-                msg.senderId === authUser._id ? "justify-end" : "justify-start"
-              }`}
-            >
-              <div
-                className={`p-2 rounded ${
-                  msg.senderId === authUser._id
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-300"
-                }`}
+          <ul className="p-4 h-full">
+            {filteredFriends.map((friend) => (
+              <li
+                key={friend._id}
+                className="flex items-center justify-between p-2 border-b cursor-pointer"
+                onClick={() => handleUserClick(friend)}
               >
-                {msg.senderId === authUser._id ? (
-                  msg.message
-                ) : (
-                  <>{msg.message}</>
-                )}
-              </div>
-            </div>
-          ))}
+                <div className="flex items-center space-x-3">
+                  <img
+                    src={friend.profileBanner}
+                    alt={friend.username}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <span>{friend.username}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="p-4 bg-white border-t flex items-center">
-          <input
-            type="text"
-            className="flex-grow border rounded-l-lg p-2"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Enter message"
-          />
-          <button
-            className="bg-blue-500 text-white p-2 rounded-r-lg hover:bg-blue-700"
-            onClick={sendMessage}
-          >
-            Send
-          </button>
+        <div className="flex-1 flex bg-white flex-col justify-between h-[650px]">
+          <div className="flex flex-col p-4 overflow-y-auto h-full ">
+            <div className="mb-4">
+              <h2 className="text-xl font-semibold">
+                {selectedFriend
+                  ? selectedFriend.username
+                  : "Select a friend to chat"}
+              </h2>
+            </div>
+            <div className="flex-1 overflow-y-auto">
+              {chat.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`mb-4 flex ${
+                    msg.senderId === authUser._id
+                      ? "justify-end"
+                      : "justify-start"
+                  }`}
+                >
+                  <div
+                    className={`p-2 rounded ${
+                      msg.senderId === authUser._id
+                        ? "bg-blue-500 text-white"
+                        : "bg-gray-300"
+                    }`}
+                  >
+                    {msg.message}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="p-4 bg-white border-t flex items-center">
+            <input
+              type="text"
+              className="flex-grow border rounded-l-lg p-2"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Enter message"
+            />
+            <button
+              className="bg-blue-500 text-white p-2 rounded-r-lg hover:bg-blue-700"
+              onClick={sendMessage}
+            >
+              Send
+            </button>
+          </div>
         </div>
       </div>
     </div>
