@@ -121,7 +121,7 @@ export default function Header() {
       {/* Menu content */}
       <div
         id="menuContent"
-        className={`overflow-hidden bg-white dark:bg-indigo-600  block lg:hidden  transition-all duration-300 ${
+        className={`overflow-hidden bg-white dark:bg-gray-700  block lg:hidden  transition-all duration-300 ${
           menuOpen
             ? "h-screen visible pb-3 opacity-100 "
             : "h-0 invisible opacity-0"

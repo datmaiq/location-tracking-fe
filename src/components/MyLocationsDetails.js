@@ -151,20 +151,20 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
               <div
                 key={location?._id}
                 id={location?._id}
-                className="group  w-full  relative z-10 rounded-2xl shadow-lg dark:shadow-black bg-[#f6f6f9]rounded-2xl dark:bg-indigo-600 transition-all duration-1000"
+                className="group  w-full  relative z-10 rounded-2xl shadow-lg dark:shadow-black bg-[#f6f6f9]rounded-2xl dark:bg-gray-700 transition-all duration-1000"
               >
-                <div className="group-hover:scale-105 group-hover:bg-[rgb(246,246,249)] bg-[#f6f6f9] dark:bg-indigo-600 dark:group-hover:bg-indigo-600 rounded-2xl absolute h-48 w-full z-20 transition-all duration-300 p-3 flex flex-col space-y-3" />
+                <div className="group-hover:scale-105 group-hover:bg-[rgb(246,246,249)s] bg-[#f6f6f9] dark:bg-gray-700 rounded-2xl absolute h-48 w-full z-20 transition-all duration-300 p-3 flex flex-col space-y-3" />
                 <div className=" h-48 w-full   z-20 p-3 rounded-2xl ">
                   <div className="flex h-full flex-col justify-between relative z-40 w-full">
                     <div className="h-3/4 flex flex-col justify-between">
                       <div className="text-sm">
-                        <span className="text-green-500">location:</span>
+                        <span className="text-primary-500">location:</span>
                         <span className="ml-3">{location?.name}</span>
                       </div>
                       <div className="text-xs">
-                        <span className="text-green-500">lat:</span>
+                        <span className="text-primary-500">lat:</span>
                         <span className="ml-2">{location?.latitude}</span>
-                        <span className="ml-5 text-green-500">long:</span>
+                        <span className="ml-5 text-primary-500">long:</span>
                         <span className="ml-2">{location?.longitude}</span>
                       </div>
                     </div>
@@ -185,7 +185,7 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
                             handleSelectLocationForUpdate(location);
                           }}
                           type="button"
-                          className="primary-button p-2 rounded-md flex items-center space-x-2 border border-green-500 cursor-pointer"
+                          className="primary-button p-2 rounded-md flex items-center space-x-2 border border-primary-500 cursor-pointer"
                         >
                           <FaEdit />
                         </button>
