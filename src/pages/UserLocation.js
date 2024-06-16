@@ -94,11 +94,11 @@ export default function UserLocation() {
                 <Popup className="">
                   <div className="flex flex-col w-full">
                     <div>
-                      <span className="font-bold text-green-500">Name: </span>
+                      <span className="font-bold text-primary-500">Name: </span>
                       <span>{userDetails?.username}</span>
                     </div>
                     <div>
-                      <span className="text-green-500">current location:</span>{" "}
+                      <span className="text-primary-500">current location:</span>{" "}
                       <span>{userDetails?.currentLocation?.name}</span>
                     </div>
                   </div>
