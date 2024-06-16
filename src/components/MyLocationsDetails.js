@@ -204,7 +204,7 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
                 </p>
                 <Link
                   to="/add-location"
-                  className="text-black dark:text-white hover:text-black  ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                  className="text-black dark:text-white hover:text-black  ml-3 p-2 border-[1px] border-border_color rounded hover:border-primary-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
                 >
                   Add Location
                 </Link>

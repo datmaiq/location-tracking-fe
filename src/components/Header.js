@@ -31,7 +31,7 @@ export default function Header() {
       <div className="h-[80px] max-h-[80px]  flex justify-between items-center space-x-5  py-3 p-2 lg:p-4 ">
         <Link
           to="/"
-          className="font-extrabold no-underline hover:no-underline w-1/2 hover:text-green-500"
+          className="font-extrabold no-underline hover:no-underline w-1/2 hover:text-primary-500"
         >
           Location Tracker
         </Link>
@@ -48,13 +48,13 @@ export default function Header() {
               </Link>
               <Link
                 to="/add-location"
-                className="bg-primary-600 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="bg-primary-600 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-primary-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Add Location
               </Link>
               <Link
                 to="/chat"
-                className="bg-primary-600 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="bg-primary-600 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-primary-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Chat
               </Link>
@@ -70,13 +70,13 @@ export default function Header() {
             <div className="">
               <Link
                 to="/signin"
-                className="text-black dark:text-white hover:text-black  ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="text-black dark:text-white hover:text-black  ml-3 p-2 border-[1px] border-border_color rounded hover:border-primary-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Signin
               </Link>
               <Link
                 to="/add-location"
-                className="bg-primary-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="bg-primary-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-primary-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Add Location
               </Link>
@@ -174,7 +174,7 @@ export default function Header() {
                 setMenuOpen(false);
               }}
               to="/add-location"
-              className="bg-primary-500 text-center w-40 text-white p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+              className="bg-primary-500 text-center w-40 text-white p-2 border-[1px] border-border_color rounded hover:border-primary-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
             >
               Add Location
             </Link>

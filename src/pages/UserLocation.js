@@ -57,14 +57,14 @@ export default function UserLocation() {
           <div className="h-1/6">
             <p className="my-3">
               This user has{" "}
-              <span className="text-green-500">
+              <span className="text-primary-500">
                 {userDetails?.friends?.length}
               </span>{" "}
               friends
             </p>
             <p>
               And has visited{" "}
-              <span className="text-green-500">
+              <span className="text-primary-500">
                 {userDetails?.locations?.length}
               </span>{" "}
               place(s).

@@ -44,7 +44,7 @@ export default function Autocomplete({ onAddLocation }) {
   return (
     <div className="flex flex-col space-y-5">
       <div className="relative h-12 w-full">
-        <FaLocationDot className="absolute right-3 top-4 text-green-500" />
+        <FaLocationDot className="absolute right-3 top-4 text-primary-500" />
         <input
           type="text"
           value={locationInput}
@@ -76,7 +76,7 @@ export default function Autocomplete({ onAddLocation }) {
                   >
                     <div className="flex flex-col">
                       <div className="flex items-center">
-                        <FaLocationDot className="text-green-500" />
+                        <FaLocationDot className="text-primary-500" />
                         <span className="ml-1 text-sm">
                           {location.city ? `${location.city}, ` : " "}{" "}
                           {location.country}

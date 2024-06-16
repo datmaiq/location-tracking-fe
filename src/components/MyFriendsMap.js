@@ -137,13 +137,13 @@ export default function MyFriendsMap() {
                       <Popup className="">
                         <div className="flex flex-col w-full">
                           <div>
-                            <span className="font-bold text-green-500">
+                            <span className="font-bold text-primary-500">
                               Name:{" "}
                             </span>
                             <span>{friend?.username}</span>
                           </div>
                           <div>
-                            <span className="font-bold text-green-500">
+                            <span className="font-bold text-primary-500">
                               current location:
                             </span>{" "}
                             <span>{friend?.currentLocation?.name}</span>
@@ -186,7 +186,7 @@ export default function MyFriendsMap() {
                             </span>
                           </Link>
                           <div className="text-xs mt-2">
-                            <span className="text-green-500">
+                            <span className="text-primary-500">
                               current location:
                             </span>
                             <span className="ml-3">
@@ -198,11 +198,11 @@ export default function MyFriendsMap() {
                           <div className="flex justify-between items-center">
                             <div className="flex space-x-5 text-xs">
                               <div className="flex items-center space-x-1">
-                                <FaLocationDot className=" text-green-500" />
+                                <FaLocationDot className=" text-primary-500" />
                                 <span>{user?.locations?.length}</span>
                               </div>
                               <div className="flex items-center space-x-1">
-                                <CiUser className=" text-green-500" />
+                                <CiUser className=" text-primary-500" />
                                 <span>{user?.friends?.length}</span>
                               </div>
                             </div>
@@ -211,7 +211,7 @@ export default function MyFriendsMap() {
                               onClick={() => {
                                 handleAddFriend(user);
                               }}
-                              className="primary-button p-2 text-xs rounded-md flex items-center space-x-2 border border-green-500 cursor-pointer"
+                              className="primary-button p-2 text-xs rounded-md flex items-center space-x-2 border border-primary-500 cursor-pointer"
                             >
                               <FaUserCheck /> <span>add friend</span>
                             </button>
