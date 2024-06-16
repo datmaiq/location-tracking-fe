@@ -43,17 +43,18 @@ const Message = () => {
 
   useEffect(() => {
     if (authUser) {
-      socket.emit("addUser", authUser.username);
+      socket.emit("addUser", authUser._id);
 
+      // TODO(datmaiq): investigate socket is disconnected frequently
       return () => {
-        socket.disconnect();
+        // socket.disconnect();
       };
     }
   }, [authUser, socket]);
 
   useEffect(() => {
     socket.on("getMessage", (message) => {
-      setChat((prev) => [...prev, message]);
+      setChat((prev) => [...prev, message.message]);
     });
 
     return () => {
@@ -106,7 +107,7 @@ const Message = () => {
   );
 
   return (
-    <div className=" bg-gray-100 flex flex-col ">
+    <div className=" bg-gray-100 flex flex-col">
       <div className="w-full bg-white border-b p-4">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Chat</h2>
@@ -183,7 +184,7 @@ const Message = () => {
               placeholder="Enter message"
             />
             <button
-              className="bg-blue-500 text-white p-2 rounded-r-lg hover:bg-blue-700"
+              className="bg-primary-500 text-white p-2 rounded-r-lg hover:bg-primary-700"
               onClick={sendMessage}
             >
               Send
