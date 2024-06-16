@@ -123,7 +123,7 @@ export default function Signin() {
           {
             loading
               ? <ButtonLoader />
-              : <button type="submit" className="bg-green-500 w-full text-white p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200">Login</button>
+              : <button type="submit" className="bg-primary-500 w-full text-white p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200">Login</button>
 
           }
           <div className="text-center text-sm text-slate-400">

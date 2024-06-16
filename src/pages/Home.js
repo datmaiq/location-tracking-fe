@@ -86,7 +86,7 @@ function Home() {
           <p className="text-lg lg:text-4xl font-extrabold text-white">Hi</p>
           <p className="text-lg text-center lg:text-4xl font-extrabold">Welcome to Location Tracker!</p>
           <p className="text-center"><i>"Cover the earth before it covers you" - - Dagobert D. Runes</i></p>
-          <Link to="/signin" className="bg-green-500 w-fit text-white mt-4 p-2 border-[1px] rounded hover:border-green-500 hover:shadow transition-all duration-200 no-underline hover:no-underline">Get Started!</Link>
+          <Link to="/signin" className="bg-primary-500 w-fit text-white mt-4 p-2 border-[1px] rounded hover:border-green-500 hover:shadow transition-all duration-200 no-underline hover:no-underline">Get Started!</Link>
         </div>
       </div>
       <div className="left-0 fixed">

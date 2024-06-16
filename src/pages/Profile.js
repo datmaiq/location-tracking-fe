@@ -126,20 +126,20 @@ export default function Profile() {
           <div className="flex justify-end space-x-2 mr-5 mt-5">
             <Link
               to="/my-locations"
-              className="flex items-center space-x-2 p-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow"
+              className="flex items-center space-x-2 p-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg shadow"
             >
               <span>Locations</span>
             </Link>
 
             <Link
               to="/my-friends"
-              className="flex items-center space-x-2 p-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow"
+              className="flex items-center space-x-2 p-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg shadow"
             >
               <span>Friends</span>
             </Link>
             <button
               type="button"
-              className="flex items-center space-x-2 p-2 bg-green-500 hover:bg-green-600 text-white rounded-lg shadow"
+              className="flex items-center space-x-2 p-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg shadow"
             >
               <CopyToClipboard
                 text={`${window.location.href}/${authUser?.username}`}

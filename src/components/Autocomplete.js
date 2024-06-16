@@ -72,7 +72,7 @@ export default function Autocomplete({ onAddLocation }) {
                 locations.map((location) => (
                   <li
                     key={location.latitude}
-                    className=" inset-1 flex items-center justify-between my-3  py-2 px-3 w-full h-20 hover:bg-gray-100 dark:hover:bg-green-500"
+                    className=" inset-1 flex items-center justify-between my-3  py-2 px-3 w-full h-20 hover:bg-gray-100 dark:hover:bg-primary-500"
                   >
                     <div className="flex flex-col">
                       <div className="flex items-center">

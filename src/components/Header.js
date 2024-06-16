@@ -48,20 +48,20 @@ export default function Header() {
               </Link>
               <Link
                 to="/add-location"
-                className="bg-green-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="bg-primary-600 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Add Location
               </Link>
               <Link
                 to="/chat"
-                className="bg-blue-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="bg-primary-600 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Chat
               </Link>
               <button
                 type="button"
                 onClick={logout}
-                className="text-black dark:text-white ml-3 p-2 border-[2px] outline-border_color rounded hover:border-red-500 focus:outline-red-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="ml-3 p-2 border-[2px] rounded hover:bg-rose-500 hover:text-white hover:outline-rose-500 focus:outline-red-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Logout
               </button>
@@ -76,7 +76,7 @@ export default function Header() {
               </Link>
               <Link
                 to="/add-location"
-                className="bg-green-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+                className="bg-primary-500 text-white ml-3 p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
               >
                 Add Location
               </Link>
@@ -121,7 +121,7 @@ export default function Header() {
       {/* Menu content */}
       <div
         id="menuContent"
-        className={`overflow-hidden bg-white dark:bg-dark_green  block lg:hidden  transition-all duration-300 ${
+        className={`overflow-hidden bg-white dark:bg-indigo-600  block lg:hidden  transition-all duration-300 ${
           menuOpen
             ? "h-screen visible pb-3 opacity-100 "
             : "h-0 invisible opacity-0"
@@ -134,16 +134,16 @@ export default function Header() {
                 setMenuOpen(false);
               }}
               to="/profile"
-              className="flex items-center justify-center no-underline hover:no-underline text-black w-40 p-2 border-[2px] border-green-500 dark:text-white   shadow transition-all duration-200 "
+              className="flex items-center justify-center no-underline hover:no-underline w-40 p-2 bg-primary-600 rounded text-white shadow transition-all duration-200 "
             >
               <span>My Profile</span>
             </Link>
             <Link
-              onClick={() => {
+              onCslick={() => {
                 setMenuOpen(false);
               }}
               to="/add-location"
-              className="bg-green-500 w-40 text-center text-white p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+              className="bg-primary-600 w-40 text-center text-white p-2 rounded hover:shadow transition-all duration-200 no-underline hover:no-underline"
             >
               Add Location
             </Link>
@@ -153,7 +153,7 @@ export default function Header() {
                 setMenuOpen(false);
                 logout();
               }}
-              className="text-black w-40 p-2 border-[2px] border-red-500 dark:text-white   shadow transition-all duration-200 no-underline hover:no-underline"
+              className="w-40 p-2 rounded border-[2px] border-white hover:bg-secondary-700 hover:border-secondary-700 hover:text-white text-black dark:text-white shadow transition-all duration-200 no-underline hover:no-underline"
             >
               Logout
             </button>
@@ -165,7 +165,7 @@ export default function Header() {
                 setMenuOpen(false);
               }}
               to="/signin"
-              className="text-black dark:text-white text-center border border-green-500 w-40 font-black p-2   transition-all duration-200 no-underline hover:no-underline"
+              className="text-black dark:text-white text-center rounded border-[2px] border-white hover:bg-secondary-700 hover:border-secondary-700 w-40 font-black p-2   transition-all duration-200 no-underline hover:no-underline"
             >
               Signin
             </Link>
@@ -174,7 +174,7 @@ export default function Header() {
                 setMenuOpen(false);
               }}
               to="/add-location"
-              className="bg-green-500 text-center w-40 text-white p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
+              className="bg-primary-500 text-center w-40 text-white p-2 border-[1px] border-border_color rounded hover:border-green-500  hover:shadow transition-all duration-200 no-underline hover:no-underline"
             >
               Add Location
             </Link>
