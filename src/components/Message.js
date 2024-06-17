@@ -1,16 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
-import AppContext from "../utils/AppContext";
 
+import AppContext from "../utils/AppContext";
+import { useNavigate } from "react-router-dom";
 const Message = () => {
   const { socket } = useContext(AppContext);
-  const { authUser } = useAuth();
+  const { authUser, isLoggedIn } = useAuth();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/signin");
+    } else {
+      navigate("/chat");
+    }
+  }, [isLoggedIn, navigate]);
 
   const sendMessage = async () => {
     if (!selectedFriend || message.trim() === "") return;
@@ -45,12 +55,17 @@ const Message = () => {
     if (authUser) {
       socket.emit("addUser", authUser._id);
 
-      // TODO(datmaiq): investigate socket is disconnected frequently
+      // TODO: investigate socket is disconnected frequently
       return () => {
         // socket.disconnect();
       };
     }
   }, [authUser, socket]);
+  useEffect(() => {
+    if (authUser && authUser.friends && authUser.friends.length > 0) {
+      handleUserClick(authUser.friends[0]);
+    }
+  }, [authUser]);
 
   useEffect(() => {
     socket.on("getMessage", (message) => {
@@ -95,16 +110,17 @@ const Message = () => {
       console.error(err);
     }
   };
-
+  console.log(selectedFriend);
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       sendMessage();
     }
   };
 
-  const filteredFriends = authUser?.friends.filter((friend) =>
-    friend.username.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredFriends =
+    authUser?.friends?.filter((friend) =>
+      friend.username.toLowerCase().includes(searchQuery.toLowerCase())
+    ) || [];
 
   return (
     <div className=" bg-gray-100 flex flex-col">
@@ -118,12 +134,12 @@ const Message = () => {
           <input
             type="text"
             placeholder="Search"
-            className="mt-2 p-2 border rounded w-full"
+            className="mt-2    p-2 border rounded w-full "
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <ul className="p-4 h-full">
-            {filteredFriends.map((friend) => (
+            {filteredFriends?.map((friend) => (
               <li
                 key={friend._id}
                 className="flex items-center justify-between p-2 border-b cursor-pointer"
@@ -143,15 +159,23 @@ const Message = () => {
         </div>
         <div className="flex-1 flex bg-white flex-col justify-between h-[650px]">
           <div className="flex flex-col p-4 overflow-y-auto h-full ">
-            <div className="mb-4">
-              <h2 className="text-xl font-semibold">
-                {selectedFriend
-                  ? selectedFriend.username
-                  : "Select a friend to chat"}
-              </h2>
+            <div className="mb-4 flex items-center space-x-4">
+              {selectedFriend && (
+                <>
+                  <img
+                    src={selectedFriend.profileBanner}
+                    alt={selectedFriend.username}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <h2 className="text-xl font-semibold">
+                    {selectedFriend.username}
+                  </h2>
+                </>
+              )}
             </div>
+
             <div className="flex-1 overflow-y-auto">
-              {chat.map((msg, index) => (
+              {chat?.map((msg, index) => (
                 <div
                   key={index}
                   className={`mb-4 flex ${
@@ -162,10 +186,12 @@ const Message = () => {
                 >
                   <div
                     className={`p-2 rounded ${
-                      msg.senderId === authUser._id
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-300"
+                      msg.senderId === authUser._id ? "text-white" : ""
                     }`}
+                    style={{
+                      backgroundColor:
+                        msg.senderId === authUser._id ? "#0484ff" : "#f0f0f0",
+                    }}
                   >
                     {msg.message}
                   </div>

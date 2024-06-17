@@ -147,6 +147,15 @@ export default function Header() {
             >
               Add Location
             </Link>
+            <Link
+              onCslick={() => {
+                setMenuOpen(false);
+              }}
+              to="/chat"
+              className="bg-primary-600 w-40 text-center text-white p-2 rounded hover:shadow transition-all duration-200 no-underline hover:no-underline"
+            >
+              Chat
+            </Link>
             <button
               type="button"
               onClick={() => {
