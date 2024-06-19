@@ -32,7 +32,7 @@ export default function UserLocation() {
         // get result data from request
         const {
           data: { data },
-        } = await axios.get(`${serverURL}/locations/user/${username}`);
+        } = await axios.get(`${serverURL}/users/${username}`);
 
         // update states
         setUserDetails(data);
