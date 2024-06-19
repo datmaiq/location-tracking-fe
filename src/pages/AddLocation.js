@@ -24,7 +24,7 @@ export default function AddLocation() {
     }
     try {
       const { data } = await axios.post(
-        `${serverURL}/locations/add`,
+        `${serverURL}/locations`,
         {
           name,
           latitude,

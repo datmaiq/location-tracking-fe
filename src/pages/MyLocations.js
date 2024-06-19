@@ -38,9 +38,8 @@ export default function MyLocations() {
 
     try {
       const { data } = await axios.put(
-        `${serverURL}/locations/edit`,
+        `${serverURL}/locations/${locationId}`,
         {
-          id: locationId,
           name: newLocationName,
         },
         {

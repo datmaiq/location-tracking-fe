@@ -28,10 +28,7 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
     const authToken = Cookies.get("authToken");
 
     try {
-      await axios.delete(`${serverURL}/locations/delete`, {
-        data: {
-          id: locationToDelete?._id,
-        },
+      await axios.delete(`${serverURL}/locations/${locationToDelete?._id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${authToken}`,
