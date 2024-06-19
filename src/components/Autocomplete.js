@@ -1,6 +1,6 @@
 import axios from "axios";
 import { FaCircleInfo, FaLocationDot } from "react-icons/fa6";
-import { useState} from "react";
+import { useState } from "react";
 import serverURL from "../utils/urls";
 
 export default function Autocomplete({ onAddLocation }) {
@@ -93,7 +93,7 @@ export default function Autocomplete({ onAddLocation }) {
                           handleAddLocation(
                             location.formattedAddress,
                             location.latitude,
-                            location.longitude,
+                            location.longitude
                           );
                         }}
                         type="button"

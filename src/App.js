@@ -13,20 +13,17 @@ import MyLocations from "./pages/MyLocations";
 import MyFriends from "./pages/MyFriends";
 import { applyDarkMapStyles, removeDarkMapStyles } from "./utils/map";
 import UserLocation from "./pages/UserLocation";
-import Message from "./components/Message";
+import Message from "./pages/Message";
 import io from "socket.io-client";
 const socket = io("http://localhost:8000");
 
 // Main App component
 function App() {
-  // Global states using the useState hook
   const [authUser, setAuthUser] = useState(null); // Authenticated user information
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Flag indicating if the user is logged in or not
   const [theme, setTheme] = useState(localStorage.theme || "light"); // Theme preference (light or dark)
 
-  // useEffect hook to handle theme changes on page load or when theme is updated
   useEffect(() => {
-    // On page load or when changing themes, best to add inline in `head` to avoid FOUC
     if (
       localStorage.theme === "dark" ||
       (!("theme" in localStorage) &&

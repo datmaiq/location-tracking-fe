@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import serverURL from "../utils/urls";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import { BsFillEnvelopeFill, BsLinkedin } from "react-icons/bs";
@@ -27,7 +27,7 @@ export default function Profile() {
 
       try {
         const { data } = await axios.post(
-          `http://localhost:8000/auth/updateProfileBanner`,
+          `${serverURL}/auth/updateProfileBanner`,
           formData,
           {
             headers: {

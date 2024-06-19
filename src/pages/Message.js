@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
+import serverURL from "../utils/urls";
 
 import AppContext from "../utils/AppContext";
 import { useNavigate } from "react-router-dom";
@@ -14,13 +15,6 @@ const Message = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/signin");
-    } else {
-      navigate("/chat");
-    }
-  }, [isLoggedIn, navigate]);
 
   const sendMessage = async () => {
     if (!selectedFriend || message.trim() === "") return;
@@ -33,10 +27,7 @@ const Message = () => {
     };
 
     try {
-      const res = await axios.post(
-        "http://localhost:8000/messages",
-        newMessage
-      );
+      const res = await axios.post(`${serverURL}/messages`, newMessage);
 
       setChat((prev) => [...prev, res.data]);
       setMessage("");
@@ -79,7 +70,7 @@ const Message = () => {
 
   const fetchMessages = async (chatId) => {
     try {
-      const res = await axios.get(`http://localhost:8000/messages/${chatId}`);
+      const res = await axios.get(`${serverURL}/messages/${chatId}`);
       setChat(res.data);
       setCurrentChatId(chatId);
     } catch (err) {
@@ -92,14 +83,14 @@ const Message = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:8000/chat/${authUser._id}/${friend._id}`
+        `${serverURL}/chat/${authUser._id}/${friend._id}`
       );
       const chat = res.data;
 
       if (chat) {
         fetchMessages(chat._id);
       } else {
-        const newChatRes = await axios.post("http://localhost:8000/chat", {
+        const newChatRes = await axios.post(`${serverURL}/chat`, {
           senderId: authUser._id,
           receiverId: friend._id,
         });
@@ -110,7 +101,7 @@ const Message = () => {
       console.error(err);
     }
   };
-  console.log(selectedFriend);
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       sendMessage();
