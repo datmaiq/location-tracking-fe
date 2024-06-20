@@ -37,7 +37,7 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
 
       // filter out the deleted location
       const updatedLocations = locations.filter(
-        (location) => location._id !== locationToDelete?._id,
+        (location) => location._id !== locationToDelete?._id
       );
 
       // update the locations state variable
@@ -123,15 +123,15 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
             />
             {locations?.length
               ? locations?.map((location) => (
-                <Marker
-                  className="leaflet-marker-icon"
-                  key={location?._id}
-                  position={[location?.latitude, location?.longitude]}
-                  icon={markerIcon}
-                >
-                  <Popup>{location?.name}</Popup>
-                </Marker>
-              ))
+                  <Marker
+                    className="leaflet-marker-icon"
+                    key={location?._id}
+                    position={[location?.latitude, location?.longitude]}
+                    icon={markerIcon}
+                  >
+                    <Popup>{location?.name}</Popup>
+                  </Marker>
+                ))
               : null}
             <Polygon pathOptions={polygonColor} positions={coordinates} />
           </MapContainer>

@@ -79,7 +79,7 @@ function Signup() {
         gender,
         currentLocation,
       });
-      console.log(response);
+
       // display success message, reset state, and navigate to sign-in
       toast.success(response?.data?.message);
       setLoading(false);

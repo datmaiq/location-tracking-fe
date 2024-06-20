@@ -9,11 +9,10 @@ import serverURL from "../utils/urls";
 import Loader from "../components/Loader";
 
 export default function UserLocation() {
-  // get the username from request parameters
   const { username } = useParams();
 
   // create the state variables
-  const [userDetails, setUserDetails] = useState(null);
+  const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
 
   // invoke the custom authentication hook
@@ -29,13 +28,9 @@ export default function UserLocation() {
     // create the getUser function
     const getUser = async () => {
       try {
-        // get result data from request
-        const {
-          data: { data },
-        } = await axios.get(`${serverURL}/users/${username}`);
+        const response = await axios.get(`${serverURL}/users/${username}`);
 
-        // update states
-        setUserDetails(data);
+        setUserDetails(response.data);
         setLoading(false);
       } catch (error) {
         const responseError = error?.response?.data?.message;
@@ -44,9 +39,15 @@ export default function UserLocation() {
       }
     };
 
-    // invoke the getUser() function
     getUser();
   }, [username]);
+
+  // Check for valid location coordinates
+  const isValidLocation =
+    userDetails?.currentLocation?.latitude !== undefined &&
+    userDetails?.currentLocation?.longitude !== undefined &&
+    userDetails?.currentLocation?.latitude !== null &&
+    userDetails?.currentLocation?.longitude !== null;
 
   return (
     <div className="p-3 h-screen lg:p-10 py-10 dark:text-white border mt-10">
@@ -76,34 +77,40 @@ export default function UserLocation() {
               center={[6.5244, 3.3792]}
               zoom={3}
               scrollWheelZoom
-              className=" bg-black h-3/4  leaflet-container"
+              className="bg-black h-3/4 leaflet-container"
             >
               <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-              <Marker
-                key={userDetails?._id}
-                className="text-white dark:bg-red-500 leaflet-marker"
-                position={[
-                  userDetails?.currentLocation?.latitude,
-                  userDetails?.currentLocation?.longitude,
-                ]}
-                icon={markerIcon}
-              >
-                <Popup className="">
-                  <div className="flex flex-col w-full">
-                    <div>
-                      <span className="font-bold text-primary-500">Name: </span>
-                      <span>{userDetails?.username}</span>
+              {isValidLocation && (
+                <Marker
+                  key={userDetails?._id}
+                  className="text-white dark:bg-red-500 leaflet-marker"
+                  position={[
+                    userDetails.currentLocation.latitude,
+                    userDetails.currentLocation.longitude,
+                  ]}
+                  icon={markerIcon}
+                >
+                  <Popup>
+                    <div className="flex flex-col w-full">
+                      <div>
+                        <span className="font-bold text-primary-500">
+                          Name:{" "}
+                        </span>
+                        <span>{userDetails?.username}</span>
+                      </div>
+                      <div>
+                        <span className="text-primary-500">
+                          current location:
+                        </span>{" "}
+                        <span>{userDetails?.currentLocation?.name}</span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="text-primary-500">current location:</span>{" "}
-                      <span>{userDetails?.currentLocation?.name}</span>
-                    </div>
-                  </div>
-                </Popup>
-              </Marker>
+                  </Popup>
+                </Marker>
+              )}
             </MapContainer>
           </div>
         </div>

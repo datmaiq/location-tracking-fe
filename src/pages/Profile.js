@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import serverURL from "../utils/urls";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -6,9 +6,11 @@ import { toast } from "react-toastify";
 import { BsFillEnvelopeFill, BsLinkedin, BsCamera } from "react-icons/bs";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
+import AppContext from "../utils/AppContext";
 
 export default function Profile() {
-  const { isLoggedIn, authUser, setAuthUser } = useAuth();
+  const { isLoggedIn } = useAuth();
+  const { authUser, setAuthUser } = useContext(AppContext);
   const navigate = useNavigate();
 
   const [copied, setCopied] = useState(false);
@@ -36,10 +38,8 @@ export default function Profile() {
           }
         );
 
-        setAuthUser((prevAuthUser) => ({
-          ...prevAuthUser,
-          ...data.data,
-        }));
+        const updatedUser = { ...authUser, ...data.data };
+        setAuthUser(updatedUser);
 
         toast.success(
           `${
@@ -57,6 +57,7 @@ export default function Profile() {
           }
         );
       } catch (error) {
+        console.log(error);
         toast.error(
           `Failed to update ${
             field === "avatar" ? "profile banner" : "cover photo"
@@ -88,7 +89,7 @@ export default function Profile() {
             <img
               className="w-full h-40 object-cover"
               src={
-                authUser.coverPhoto || "https://via.placeholder.com/1500x400"
+                authUser?.coverPhoto || "https://via.placeholder.com/1500x400"
               }
               alt="profile banner"
               onClick={() => document.getElementById("coverPhotoInput").click()}
@@ -102,7 +103,6 @@ export default function Profile() {
             />
             <div className="absolute bottom-3 right-3 cursor-pointer">
               <BsCamera
-                className="w-6 h-6 text-white bg-black bg-opacity-50 p-1 rounded-full"
                 onClick={() =>
                   document.getElementById("coverPhotoInput").click()
                 }
@@ -112,7 +112,7 @@ export default function Profile() {
               <label htmlFor="avatarInput">
                 <img
                   className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800"
-                  src={authUser.profileBanner}
+                  src={authUser?.profileBanner}
                   alt="profile"
                 />
               </label>
@@ -125,7 +125,6 @@ export default function Profile() {
               />
               <div className="absolute bottom-0 right-0 transform translate-x-1/2 translate-y-1/2 cursor-pointer">
                 <BsCamera
-                  className="w-6 h-6 text-white bg-black bg-opacity-50 p-1 rounded-full"
                   onClick={() => document.getElementById("avatarInput").click()}
                 />
               </div>

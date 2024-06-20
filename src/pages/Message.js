@@ -2,19 +2,16 @@ import React, { useContext, useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import serverURL from "../utils/urls";
-
 import AppContext from "../utils/AppContext";
-import { useNavigate } from "react-router-dom";
+
 const Message = () => {
   const { socket } = useContext(AppContext);
-  const { authUser, isLoggedIn } = useAuth();
+  const { authUser } = useAuth();
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [currentChatId, setCurrentChatId] = useState(null);
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
-
-  const navigate = useNavigate();
 
   const sendMessage = async () => {
     if (!selectedFriend || message.trim() === "") return;
@@ -46,17 +43,18 @@ const Message = () => {
     if (authUser) {
       socket.emit("addUser", authUser._id);
 
-      // TODO: investigate socket is disconnected frequently
       return () => {
         // socket.disconnect();
       };
     }
   }, [authUser, socket]);
+
   useEffect(() => {
     if (authUser && authUser.friends && authUser.friends.length > 0) {
       handleUserClick(authUser.friends[0]);
     }
-  }, [authUser]);
+    // eslint-disable-next-line
+  }, [authUser?.friends?.length]);
 
   useEffect(() => {
     socket.on("getMessage", (message) => {
@@ -114,18 +112,20 @@ const Message = () => {
     ) || [];
 
   return (
-    <div className=" bg-gray-100 flex flex-col">
-      <div className="w-full bg-white border-b p-4">
+    <div
+      className={`bg-gray-100 dark:bg-gray-900 dark:text-white flex flex-col`}
+    >
+      <div className="w-full bg-white dark:bg-gray-800 border-b p-4">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Chat</h2>
         </div>
       </div>
       <div className="flex flex-1">
-        <div className="w-1/4 bg-white border-r overflow-y-auto">
+        <div className="w-1/4 bg-white dark:bg-gray-800 border-r overflow-y-auto">
           <input
             type="text"
             placeholder="Search"
-            className="mt-2    p-2 border rounded w-full "
+            className="mt-2 p-2 border rounded w-full dark:bg-gray-700 dark:text-white"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -133,7 +133,7 @@ const Message = () => {
             {filteredFriends?.map((friend) => (
               <li
                 key={friend._id}
-                className="flex items-center justify-between p-2 border-b cursor-pointer"
+                className="flex items-center justify-between p-2 border-b cursor-pointer dark:border-gray-700"
                 onClick={() => handleUserClick(friend)}
               >
                 <div className="flex items-center space-x-3">
@@ -148,8 +148,8 @@ const Message = () => {
             ))}
           </ul>
         </div>
-        <div className="flex-1 flex bg-white flex-col justify-between h-[650px]">
-          <div className="flex flex-col p-4 overflow-y-auto h-full ">
+        <div className="flex-1 flex bg-white dark:bg-gray-800 flex-col justify-between h-[650px]">
+          <div className="flex flex-col p-4 overflow-y-auto h-full">
             <div className="mb-4 flex items-center space-x-4">
               {selectedFriend && (
                 <>
@@ -177,7 +177,9 @@ const Message = () => {
                 >
                   <div
                     className={`p-2 rounded ${
-                      msg.senderId === authUser._id ? "text-white" : ""
+                      msg.senderId === authUser._id
+                        ? "text-white"
+                        : "dark:text-black"
                     }`}
                     style={{
                       backgroundColor:
@@ -191,10 +193,10 @@ const Message = () => {
             </div>
           </div>
 
-          <div className="p-4 bg-white border-t flex items-center">
+          <div className="p-4 bg-white dark:bg-gray-800 border-t flex items-center">
             <input
               type="text"
-              className="flex-grow border rounded-l-lg p-2"
+              className="flex-grow border rounded-l-lg p-2 dark:bg-gray-700 dark:text-white"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={handleKeyDown}
