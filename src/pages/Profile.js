@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import serverURL from "../utils/urls";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
-import { BsFillEnvelopeFill, BsLinkedin } from "react-icons/bs";
+import { BsFillEnvelopeFill, BsLinkedin, BsCamera } from "react-icons/bs";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
 
@@ -19,15 +19,15 @@ export default function Profile() {
     }
   }, [isLoggedIn, navigate]);
 
-  const handleAvatarChange = async (event) => {
+  const handleFileChange = async (event, field) => {
     const file = event.target.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append("profileBanner", file);
+      formData.append(field, file);
 
       try {
-        const { data } = await axios.post(
-          `${serverURL}/auth/updateProfileBanner`,
+        const { data } = await axios.put(
+          `${serverURL}/users/${authUser._id}/profile`,
           formData,
           {
             headers: {
@@ -35,31 +35,43 @@ export default function Profile() {
             },
           }
         );
+
         setAuthUser((prevAuthUser) => ({
           ...prevAuthUser,
-          profileBanner: data.profileBanner,
+          ...data.data,
         }));
-        toast.success("Profile banner updated successfully!", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+
+        toast.success(
+          `${
+            field === "avatar" ? "Profile banner" : "Cover photo"
+          } updated successfully!`,
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
       } catch (error) {
-        toast.error("Failed to update profile banner.", {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: true,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        toast.error(
+          `Failed to update ${
+            field === "avatar" ? "profile banner" : "cover photo"
+          }.`,
+          {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+          }
+        );
       }
     }
   };
@@ -75,9 +87,27 @@ export default function Profile() {
           <div className="relative">
             <img
               className="w-full h-40 object-cover"
-              src="https://via.placeholder.com/1500x400" // Replace with a real banner image URL
+              src={
+                authUser.coverPhoto || "https://via.placeholder.com/1500x400"
+              }
               alt="profile banner"
+              onClick={() => document.getElementById("coverPhotoInput").click()}
             />
+            <input
+              type="file"
+              id="coverPhotoInput"
+              className="hidden"
+              accept="image/*"
+              onChange={(e) => handleFileChange(e, "coverPhoto")}
+            />
+            <div className="absolute bottom-3 right-3 cursor-pointer">
+              <BsCamera
+                className="w-6 h-6 text-white bg-black bg-opacity-50 p-1 rounded-full"
+                onClick={() =>
+                  document.getElementById("coverPhotoInput").click()
+                }
+              />
+            </div>
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 cursor-pointer">
               <label htmlFor="avatarInput">
                 <img
@@ -91,11 +121,16 @@ export default function Profile() {
                 id="avatarInput"
                 className="hidden"
                 accept="image/*"
-                onChange={handleAvatarChange}
+                onChange={(e) => handleFileChange(e, "avatar")}
               />
+              <div className="absolute bottom-0 right-0 transform translate-x-1/2 translate-y-1/2 cursor-pointer">
+                <BsCamera
+                  className="w-6 h-6 text-white bg-black bg-opacity-50 p-1 rounded-full"
+                  onClick={() => document.getElementById("avatarInput").click()}
+                />
+              </div>
             </div>
           </div>
-          {/* Profile Information */}
           <div className="text-center mt-16 mb-6">
             <h2 className="text-2xl font-semibold">{authUser.username}</h2>
             <p className="text-gray-600 dark:text-gray-300">
@@ -104,7 +139,6 @@ export default function Profile() {
                 : "Location empty"}
             </p>
           </div>
-          {/* Navigation Tabs */}
           <div className="flex justify-around border-t border-gray-300 dark:border-gray-700 pt-3">
             <Link
               to="#"
@@ -123,7 +157,6 @@ export default function Profile() {
               <span>Locations</span>
             </Link>
           </div>
-
           <div className="flex justify-end space-x-2 mr-5 mt-5">
             <Link
               to="/my-locations"
@@ -131,7 +164,6 @@ export default function Profile() {
             >
               <span>Locations</span>
             </Link>
-
             <Link
               to="/my-friends"
               className="flex items-center space-x-2 p-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg shadow"
@@ -164,7 +196,6 @@ export default function Profile() {
               </CopyToClipboard>
             </button>
           </div>
-
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
@@ -174,7 +205,6 @@ export default function Profile() {
                   {authUser?.username}@gmail.com
                 </p>
               </div>
-
               <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
                 <h3 className="text-lg font-semibold mb-3">Social</h3>
                 <p className="flex items-center text-gray-600 dark:text-gray-300 mb-2">
