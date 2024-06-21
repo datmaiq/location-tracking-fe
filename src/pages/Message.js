@@ -53,7 +53,7 @@ const Message = () => {
     if (authUser && authUser.friends && authUser.friends.length > 0) {
       handleUserClick(authUser.friends[0]);
     }
-    // eslint-disable-next-line
+    //eslint-disable-next-line
   }, [authUser?.friends?.length]);
 
   useEffect(() => {

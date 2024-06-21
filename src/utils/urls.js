@@ -1,2 +1,2 @@
-const serverURL = "https://location-tracking-be-1.onrender.com";
+const serverURL = "http://localhost:8000";
 export default serverURL;

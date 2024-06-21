@@ -12,20 +12,17 @@ import useAuth from "../hooks/useAuth";
 import DownloadMap from "../utils/downloadmap";
 
 export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
-  // get the authenticated user from a custom hook effect
   const { authUser } = useAuth();
 
-  // create the state variables
   const [locations, setLocations] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
 
   // create a polygon color
   const polygonColor = { color: "blue" };
 
-  // function to handle the deletion of a user's location
   const handleDeleteLocation = async (locationToDelete) => {
-    // get a cookie value
     const authToken = Cookies.get("authToken");
+    console.log(authToken);
 
     try {
       await axios.delete(`${serverURL}/locations/${locationToDelete?._id}`, {
