@@ -15,6 +15,7 @@ import { applyDarkMapStyles, removeDarkMapStyles } from "./utils/map";
 import UserLocation from "./pages/UserLocation";
 import Message from "./pages/Message";
 import io from "socket.io-client";
+
 const socket = io("http://localhost:8000");
 
 // Main App component
