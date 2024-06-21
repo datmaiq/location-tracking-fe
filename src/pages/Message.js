@@ -108,7 +108,7 @@ const Message = () => {
 
   const filteredFriends =
     authUser?.friends?.filter((friend) =>
-      friend.username.toLowerCase().includes(searchQuery.toLowerCase())
+      friend?.username.toLowerCase().includes(searchQuery?.toLowerCase())
     ) || [];
 
   return (

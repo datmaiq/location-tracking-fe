@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import serverURL from "../utils/urls";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -39,12 +39,9 @@ export default function Profile() {
           }
         );
 
-        setAuthUser((prevUser) => ({
-          ...prevUser,
-          ...data,
-        }));
+        const { user } = data;
+        setAuthUser(user);
 
-        window.location.reload();
         toast.success(
           `${
             field === "avatar" ? "Profile banner" : "Cover photo"
@@ -80,7 +77,7 @@ export default function Profile() {
       }
     }
   };
-  console.log(profileBannerUrl);
+
   useEffect(() => {
     if (authUser?.profileBannerId) {
       fetchImage(authUser?.profileBannerId, setProfileBannerUrl);
@@ -92,7 +89,7 @@ export default function Profile() {
       fetchImage(authUser?.coverPhotoId, setCoverPhotoUrl);
     }
   }, [authUser?.coverPhotoId]);
-  console.log(authUser);
+
   const fetchImage = async (imageId, setImageUrl) => {
     try {
       const response = await axios.get(`${serverURL}/users/file/${imageId}`, {
@@ -104,7 +101,7 @@ export default function Profile() {
       console.log("Failed to fetch image:", error);
     }
   };
-  console.log(profileBannerUrl);
+
   if (!isLoggedIn) {
     return null;
   }
@@ -117,7 +114,9 @@ export default function Profile() {
             <img
               key={coverPhotoUrl}
               className="w-full h-40 object-cover"
-              src={coverPhotoUrl || "https://via.placeholder.com/1500x400"}
+              src={
+                authUser.coverPhoto || "https://via.placeholder.com/1500x400"
+              }
               alt="cover"
               onClick={() => document.getElementById("coverPhotoInput").click()}
             />
@@ -141,7 +140,7 @@ export default function Profile() {
                   key={profileBannerUrl}
                   className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800"
                   src={
-                    profileBannerUrl ||
+                    authUser.profileBanner ||
                     "https://img.icons8.com/?size=160&id=492ILERveW8G&format=png"
                   }
                   alt="profile"
