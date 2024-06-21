@@ -12,8 +12,9 @@ export default function Profile() {
   const { isLoggedIn } = useAuth();
   const { authUser, setAuthUser } = useContext(AppContext);
   const navigate = useNavigate();
-
   const [copied, setCopied] = useState(false);
+  const [profileBannerUrl, setProfileBannerUrl] = useState("");
+  const [coverPhotoUrl, setCoverPhotoUrl] = useState("");
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -28,7 +29,7 @@ export default function Profile() {
       formData.append(field, file);
 
       try {
-        const { data } = await axios.put(
+        const { data } = await axios.post(
           `${serverURL}/users/${authUser._id}/profile`,
           formData,
           {
@@ -38,9 +39,12 @@ export default function Profile() {
           }
         );
 
-        const updatedUser = { ...authUser, ...data.data };
-        setAuthUser(updatedUser);
+        setAuthUser((prevUser) => ({
+          ...prevUser,
+          ...data,
+        }));
 
+        window.location.reload();
         toast.success(
           `${
             field === "avatar" ? "Profile banner" : "Cover photo"
@@ -76,7 +80,31 @@ export default function Profile() {
       }
     }
   };
+  console.log(profileBannerUrl);
+  useEffect(() => {
+    if (authUser?.profileBannerId) {
+      fetchImage(authUser?.profileBannerId, setProfileBannerUrl);
+    }
+  }, [authUser?.profileBannerId]);
 
+  useEffect(() => {
+    if (authUser?.coverPhotoId) {
+      fetchImage(authUser?.coverPhotoId, setCoverPhotoUrl);
+    }
+  }, [authUser?.coverPhotoId]);
+  console.log(authUser);
+  const fetchImage = async (imageId, setImageUrl) => {
+    try {
+      const response = await axios.get(`${serverURL}/users/file/${imageId}`, {
+        responseType: "blob",
+      });
+      const imageUrl = URL.createObjectURL(response.data);
+      setImageUrl(imageUrl);
+    } catch (error) {
+      console.log("Failed to fetch image:", error);
+    }
+  };
+  console.log(profileBannerUrl);
   if (!isLoggedIn) {
     return null;
   }
@@ -87,11 +115,10 @@ export default function Profile() {
         <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden w-full">
           <div className="relative">
             <img
+              key={coverPhotoUrl}
               className="w-full h-40 object-cover"
-              src={
-                authUser?.coverPhoto || "https://via.placeholder.com/1500x400"
-              }
-              alt="profile banner"
+              src={coverPhotoUrl || "https://via.placeholder.com/1500x400"}
+              alt="cover"
               onClick={() => document.getElementById("coverPhotoInput").click()}
             />
             <input
@@ -111,8 +138,9 @@ export default function Profile() {
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 cursor-pointer">
               <label htmlFor="avatarInput">
                 <img
+                  key={profileBannerUrl}
                   className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800"
-                  src={authUser?.profileBanner}
+                  src={profileBannerUrl || "https://via.placeholder.com/150"}
                   alt="profile"
                 />
               </label>
