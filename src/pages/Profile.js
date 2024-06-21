@@ -140,7 +140,10 @@ export default function Profile() {
                 <img
                   key={profileBannerUrl}
                   className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800"
-                  src={profileBannerUrl || "https://via.placeholder.com/150"}
+                  src={
+                    profileBannerUrl ||
+                    "https://img.icons8.com/?size=160&id=492ILERveW8G&format=png"
+                  }
                   alt="profile"
                 />
               </label>

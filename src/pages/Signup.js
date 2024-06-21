@@ -30,7 +30,6 @@ function Signup() {
     setUserDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  // handle add current location
   const handleAddCurrentLocation = (name, latitude, longitude) => {
     setUserDetails((prev) => ({
       ...prev,
