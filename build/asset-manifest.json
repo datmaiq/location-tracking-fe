@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/static/css/main.c0ca992c.css",
-    "main.js": "/static/js/main.b5d1dffd.js",
+    "main.js": "/static/js/main.bec8c13e.js",
     "static/js/453.c8f5729e.chunk.js": "/static/js/453.c8f5729e.chunk.js",
     "static/media/three-globe-earth-blue-marble.jpeg": "/static/media/three-globe-earth-blue-marble.7deee995d548fe65faff.jpeg",
     "static/media/three-globe-earth-topology.png": "/static/media/three-globe-earth-topology.739e278bf846bb7b50d5.png",
     "index.html": "/index.html",
     "main.c0ca992c.css.map": "/static/css/main.c0ca992c.css.map",
-    "main.b5d1dffd.js.map": "/static/js/main.b5d1dffd.js.map",
+    "main.bec8c13e.js.map": "/static/js/main.bec8c13e.js.map",
     "453.c8f5729e.chunk.js.map": "/static/js/453.c8f5729e.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c0ca992c.css",
-    "static/js/main.b5d1dffd.js"
+    "static/js/main.bec8c13e.js"
   ]
 }
