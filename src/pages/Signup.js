@@ -8,12 +8,10 @@ import ButtonLoader from "../components/ButtonLoader";
 import Autocomplete from "../components/Autocomplete";
 
 function Signup() {
-  // access global state
   const { isLoggedIn } = useContext(AppContext);
-  // navigation hook
+
   const navigate = useNavigate();
 
-  // state variables
   const [userDetails, setUserDetails] = useState({
     username: "",
     password: "",
@@ -24,7 +22,6 @@ function Signup() {
   const [inputError, setInputError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // handle input change
   const handleInputChange = (name, value) => {
     setInputError("");
     setUserDetails((prev) => ({ ...prev, [name]: value }));
@@ -37,16 +34,13 @@ function Signup() {
     }));
   };
 
-  // handle the sign-up submission
   const handleSignup = async (e) => {
     setLoading(true);
     e.preventDefault();
     setInputError("");
 
-    // destructure user details
     const { username, password, gender, currentLocation } = userDetails;
 
-    // validation checks
     if (!username.trim()) {
       setInputError("Please enter a username");
       setLoading(false);
@@ -63,7 +57,6 @@ function Signup() {
       return;
     }
 
-    // final validation check
     if (!username.trim() || !password.trim() || !gender) {
       setInputError("Please fill in required fields");
       setLoading(false);
@@ -71,7 +64,6 @@ function Signup() {
     }
 
     try {
-      // make a sign-up request
       const response = await axios.post(`${serverURL}/auth/signup`, {
         username,
         password,
@@ -79,12 +71,10 @@ function Signup() {
         currentLocation,
       });
 
-      // display success message, reset state, and navigate to sign-in
       toast.success(response?.data?.message);
       setLoading(false);
       navigate("/signin");
     } catch (error) {
-      // handle the sign-up error and display an error message
       const responseError = error?.response?.data?.message;
       toast.error(responseError || error.message);
       setLoading(false);
@@ -92,7 +82,6 @@ function Signup() {
     }
   };
 
-  // redirect to profile page if already logged in
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/profile");

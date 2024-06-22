@@ -103,7 +103,7 @@ export default function Header() {
               </button>
             )}
           </div>
-          {/* menu button */}
+
           <div className="flex md:hidden h-full">
             {menuOpen ? (
               <button type="button" onClick={handleMenuBar}>
@@ -118,7 +118,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Menu content */}
       <div
         id="menuContent"
         className={`overflow-hidden bg-white dark:bg-gray-700  block lg:hidden  transition-all duration-300 ${

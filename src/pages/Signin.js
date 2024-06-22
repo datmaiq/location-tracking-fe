@@ -8,12 +8,10 @@ import AppContext from "../utils/AppContext";
 import ButtonLoader from "../components/ButtonLoader";
 
 export default function Signin() {
-  // Access global state and functions using useContext
   const { isLoggedIn, setIsLoggedIn, setAuthUser } = useContext(AppContext);
-  // Navigation hook
+
   const navigate = useNavigate();
 
-  // State variables
   const [userDetails, setUserDetails] = useState({
     username: "",
     password: "",
@@ -22,20 +20,17 @@ export default function Signin() {
   const [inputError, setInputError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Handle input change
   const handleInputChange = (name, value) => {
     setInputError("");
     setUserDetails((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle signin submission
   const handleSignin = async (e) => {
     setLoading(true);
     e.preventDefault();
     setInputError("");
     const { username, password } = userDetails;
 
-    // Validation checks
     if (!username.trim()) {
       setInputError("Please enter a username");
       setLoading(false);
@@ -47,7 +42,6 @@ export default function Signin() {
       return;
     }
 
-    // Final validation check
     if (!username.trim() || !password.trim()) {
       setInputError("Please fill in required fields");
       setLoading(false);
@@ -55,7 +49,6 @@ export default function Signin() {
     }
 
     try {
-      // Make signin request
       const {
         data: { data },
       } = await axios.post(`${serverURL}/auth/signin`, {
@@ -63,7 +56,6 @@ export default function Signin() {
         password,
       });
 
-      // Set cookies for authentication and user data
       const expirationTime = new Date(new Date().getTime() + 60 * 60 * 1000); // 1hr
       Cookies.set("authToken", data.token, {
         expires: expirationTime,
@@ -76,14 +68,12 @@ export default function Signin() {
         secure: true,
       });
 
-      // Display success message, reset state, and navigate to profile
       toast.success("Login successful!");
       navigate("/profile");
       setAuthUser(data.user);
       setIsLoggedIn(true);
       setLoading(false);
     } catch (error) {
-      // Handle signin error, display error message
       const responseError = error?.response?.data?.message;
       toast.error(responseError || error.message);
       setSigninError(responseError);
@@ -91,7 +81,6 @@ export default function Signin() {
     }
   };
 
-  // Redirect to profile page if already logged in
   useEffect(() => {
     if (isLoggedIn) {
       navigate("/profile");

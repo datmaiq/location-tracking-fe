@@ -23,7 +23,6 @@ export default function MyLocations() {
     setInitialLocationName(location.name);
   };
 
-  // handle change of location name of form input
   const handleInputChange = (e) => {
     setNewLocationName(e.target.value);
   };
@@ -47,7 +46,6 @@ export default function MyLocations() {
       );
       toast.success(data.message);
 
-      //reload page
       window.location.reload(true);
     } catch (error) {
       const responseError = error?.response?.data?.message;

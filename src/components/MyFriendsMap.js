@@ -14,15 +14,12 @@ import getCsvData from "../utils/csv";
 import DownloadMap from "../utils/downloadmap";
 
 export default function MyFriendsMap() {
-  // get the authenticated user
   const { authUser } = useAuth();
 
-  // create state variables
   const [others, setOthers] = useState([]);
   const [friends, setFriends] = useState([]);
 
   const handleAddFriend = async (friend) => {
-    // get cookie value for authentication token
     const authToken = Cookies.get("authToken");
     try {
       await axios.post(
@@ -57,18 +54,14 @@ export default function MyFriendsMap() {
     });
 
   useEffect(() => {
-    // get authenticated user's friends
     const fetchedFriends = authUser?.friends || [];
 
-    // get cookie value for authentication token
     const authToken = Cookies.get("authToken");
 
-    // update friends state
     const initializeFriends = () => {
       setFriends(fetchedFriends);
     };
 
-    // get other users or suggested users
     const getOtherUsers = async () => {
       try {
         const {

@@ -4,11 +4,10 @@ import { useState } from "react";
 import serverURL from "../utils/urls";
 
 export default function Autocomplete({ onAddLocation }) {
-  // state variables
-  const [locations, setLocations] = useState([]); // Array to store autocomplete suggestions
-  const [locationInput, setLocationInput] = useState(""); // user input for location search
-  const [inputTimer, setInputTimer] = useState(null); // timer for input debounce
-  const [autoCompleteerror, setAutoCompleteError] = useState(""); // error message for autocomplete
+  const [locations, setLocations] = useState([]);
+  const [locationInput, setLocationInput] = useState("");
+  const [inputTimer, setInputTimer] = useState(null);
+  const [autoCompleteerror, setAutoCompleteError] = useState("");
 
   const autocomplete = async (searchKey) => {
     try {

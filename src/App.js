@@ -1,4 +1,3 @@
-// Importing necessary modules and components from React and project files
 import { useState, useEffect } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import Layout from "./components/Layout";
@@ -19,11 +18,10 @@ import serverURL from "./utils/urls";
 
 const socket = io(serverURL);
 
-// Main App component
 function App() {
-  const [authUser, setAuthUser] = useState(null); // Authenticated user information
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Flag indicating if the user is logged in or not
-  const [theme, setTheme] = useState(localStorage.theme || "light"); // Theme preference (light or dark)
+  const [authUser, setAuthUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [theme, setTheme] = useState(localStorage.theme || "light");
 
   useEffect(() => {
     if (
@@ -31,24 +29,22 @@ function App() {
       (!("theme" in localStorage) &&
         window.matchMedia("(prefers-color-scheme: dark)").matches)
     ) {
-      document.documentElement.classList.add("dark"); // Apply dark theme
+      document.documentElement.classList.add("dark");
     } else {
-      document.documentElement.classList.remove("dark"); // Remove dark theme
+      document.documentElement.classList.remove("dark");
     }
   }, [theme]);
 
-  // Function to set and apply light theme
   const lightTheme = () => {
     localStorage.theme = "light";
     setTheme("light");
-    removeDarkMapStyles(); // Remove dark map styles if applied
+    removeDarkMapStyles();
   };
 
-  // Function to set and apply dark theme
   const darkTheme = () => {
     localStorage.theme = "dark";
     setTheme("dark");
-    applyDarkMapStyles(); // Apply dark map styles
+    applyDarkMapStyles();
   };
 
   return (
@@ -64,7 +60,6 @@ function App() {
         socket: socket,
       }}
     >
-      {/* Setting up routing with BrowserRouter and Routes */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
@@ -78,7 +73,6 @@ function App() {
             <Route path="profile/:username" element={<UserLocation />} />
             <Route path="chat" element={<Message />} />
             <Route path="*" element={<NoPage />} />{" "}
-            {/* Catch-all route for unknown paths */}
           </Route>
         </Routes>
       </BrowserRouter>
@@ -86,5 +80,4 @@ function App() {
   );
 }
 
-// Export the App component as the default export of the file
 export default App;

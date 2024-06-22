@@ -11,21 +11,17 @@ import Loader from "../components/Loader";
 export default function UserLocation() {
   const { username } = useParams();
 
-  // create the state variables
   const [userDetails, setUserDetails] = useState({});
   const [loading, setLoading] = useState(true);
 
-  // invoke the custom authentication hook
   useAuth();
 
-  // create custom marker
   const markerIcon = new Leaflet.Icon({
     iconUrl: userDetails?.profileBanner,
     iconSize: [40, 40],
   });
 
   useEffect(() => {
-    // create the getUser function
     const getUser = async () => {
       try {
         const response = await axios.get(`${serverURL}/users/${username}`);
@@ -42,7 +38,6 @@ export default function UserLocation() {
     getUser();
   }, [username]);
 
-  // Check for valid location coordinates
   const isValidLocation =
     userDetails?.currentLocation?.latitude !== undefined &&
     userDetails?.currentLocation?.longitude !== undefined &&

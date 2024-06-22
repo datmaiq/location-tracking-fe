@@ -43,24 +43,20 @@ function Home() {
 
       moveSpheres();
 
-      // Setup renderer
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth, window.innerHeight);
       canvasRef.current.appendChild(renderer.domElement);
 
-      // Setup scene
       const scene = new THREE.Scene();
       scene.add(Globe);
       scene.add(new THREE.AmbientLight(0xcccccc, Math.PI));
       scene.add(new THREE.DirectionalLight(0xffffff, 0.6 * Math.PI));
 
-      // Setup camera
       const camera = new THREE.PerspectiveCamera();
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       camera.position.z = 500;
 
-      // Add camera controls
       const tbControls = new TrackballControls(camera, renderer.domElement);
       tbControls.minDistance = 101;
       tbControls.rotateSpeed = 5;
@@ -69,7 +65,6 @@ function Home() {
       const animate = () => {
         tbControls.update();
 
-        // Add rotation to the globe
         Globe.rotation.y += 0.005;
 
         renderer.render(scene, camera);

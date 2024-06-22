@@ -42,10 +42,6 @@ const Message = () => {
   useEffect(() => {
     if (authUser) {
       socket.emit("addUser", authUser._id);
-
-      return () => {
-        // socket.disconnect();
-      };
     }
   }, [authUser, socket]);
 

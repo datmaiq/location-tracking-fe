@@ -35,13 +35,14 @@ export default function AddLocation() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${authToken}`,
           },
-        },
+        }
       );
       toast.success(data.message);
       navigate("/my-locations");
     } catch (error) {
       const responseError = error?.response?.data?.message;
       toast.error(responseError || error.message);
+      console.log(error);
     }
   };
 

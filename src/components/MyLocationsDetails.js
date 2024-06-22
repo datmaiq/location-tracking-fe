@@ -17,7 +17,6 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
   const [locations, setLocations] = useState([]);
   const [coordinates, setCoordinates] = useState([]);
 
-  // create a polygon color
   const polygonColor = { color: "blue" };
 
   const handleDeleteLocation = async (locationToDelete) => {
@@ -32,22 +31,18 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
         },
       });
 
-      // filter out the deleted location
       const updatedLocations = locations.filter(
         (location) => location._id !== locationToDelete?._id
       );
 
-      // update the locations state variable
       setLocations(updatedLocations);
 
-      // update the coordinates
       const updatedCoodinates = updatedLocations.map((location) => [
         location.latitude,
         location.longitude,
       ]);
       setCoordinates(updatedCoodinates);
 
-      // display a success message
       toast.success("Location deleted successfully!");
     } catch (error) {
       const responseError = error?.response?.data?.message;
@@ -55,7 +50,6 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
     }
   };
 
-  // create the custom marker
   const markerIcon = new Leaflet.Icon({
     iconUrl: "https://unpkg.com/leaflet@1.9.3/dist/images/marker-icon-2x.png",
     shadowUrl:
@@ -71,7 +65,6 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
     const initializeLocations = () => {
       setLocations(userLocations);
 
-      // set the coordinates
       const coordinates = userLocations?.map((location) => [
         location?.latitude,
         location?.longitude,
