@@ -114,9 +114,7 @@ export default function Profile() {
             <img
               key={coverPhotoUrl}
               className="w-full h-40 object-cover"
-              src={
-                authUser.coverPhoto || "https://via.placeholder.com/1500x400"
-              }
+              src={coverPhotoUrl || "https://via.placeholder.com/1500x400"}
               alt="cover"
               onClick={() => document.getElementById("coverPhotoInput").click()}
             />
@@ -140,7 +138,7 @@ export default function Profile() {
                   key={profileBannerUrl}
                   className="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800"
                   src={
-                    authUser.profileBanner ||
+                    profileBannerUrl ||
                     "https://img.icons8.com/?size=160&id=492ILERveW8G&format=png"
                   }
                   alt="profile"
