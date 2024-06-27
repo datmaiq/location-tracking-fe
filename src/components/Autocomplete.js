@@ -2,8 +2,12 @@ import axios from "axios";
 import { FaCircleInfo, FaLocationDot } from "react-icons/fa6";
 import { useState } from "react";
 import serverURL from "../utils/urls";
-
-export default function Autocomplete({ onAddLocation }) {
+import { FaSpinner } from "react-icons/fa";
+export default function Autocomplete({
+  onAddLocation,
+  onFetchCurrentLocation,
+  loading,
+}) {
   const [locations, setLocations] = useState([]);
   const [locationInput, setLocationInput] = useState("");
   const [inputTimer, setInputTimer] = useState(null);
@@ -43,7 +47,13 @@ export default function Autocomplete({ onAddLocation }) {
   return (
     <div className="flex flex-col space-y-5">
       <div className="relative h-12 w-full">
-        <FaLocationDot className="absolute right-3 top-4 text-primary-500" />
+        <button
+          className="absolute right-3 top-1 bg-inherit text-slate-500 py-1 px-2 rounded"
+          onClick={onFetchCurrentLocation}
+          disabled={loading}
+        >
+          {loading ? <FaSpinner className="animate-spin" /> : "📍"}
+        </button>
         <input
           type="text"
           value={locationInput}
@@ -53,6 +63,7 @@ export default function Autocomplete({ onAddLocation }) {
           className="w-full text-slate-500 p-2 rounded-md outline outline-green-200 outline-4 transition-all duration-500 bg-white dark:bg-black dark:text-white"
         />
       </div>
+
       <div className="  rounded-b-xl   max-h-[400px] ">
         {autoCompleteerror ? (
           <div className="text-red-500 flex items-center justify-center shadow-2xl p-3 rounded-md">

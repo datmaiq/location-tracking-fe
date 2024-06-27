@@ -1,3 +1,4 @@
+import React, { useState, useContext } from "react";
 import Autocomplete from "../components/Autocomplete";
 import MapComponent from "../components/MapComponent";
 import useAuth from "../hooks/useAuth";
@@ -6,7 +7,6 @@ import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import serverURL from "../utils/urls";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
 import AppContext from "../utils/AppContext";
 
 export default function AddLocation() {
@@ -14,6 +14,7 @@ export default function AddLocation() {
 
   const navigate = useNavigate();
   const { isLoggedIn } = useContext(AppContext);
+  const [loading, setLoading] = useState(false);
 
   const handleAddLocation = async (name, latitude, longitude) => {
     const authToken = Cookies.get("authToken");
@@ -46,12 +47,52 @@ export default function AddLocation() {
     }
   };
 
+  const reverseGeocode = async (latitude, longitude) => {
+    try {
+      const { data } = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+      );
+      return data.display_name;
+    } catch (error) {
+      console.error("Error in reverse geocoding: ", error);
+      return "Current Location";
+    }
+  };
+
+  const handleFetchCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      toast.error("Geolocation is not supported by your browser");
+      return;
+    }
+
+    setLoading(true);
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        console.log(position);
+        const locationName = await reverseGeocode(latitude, longitude);
+        handleAddLocation(locationName, latitude, longitude);
+        setLoading(false);
+      },
+      (error) => {
+        toast.error("Unable to retrieve your location");
+        console.error(error);
+        setLoading(false);
+      }
+    );
+  };
+
   return (
     <div className="">
       <div className="h-screen  overflow-hidden left-0 fixed w-full">
         <div className="fixed lg:absolute w-full mt-20  z-40 flex flex-col justify-center items-center">
           <div className="w-[400px]">
-            <Autocomplete onAddLocation={handleAddLocation} />
+            <Autocomplete
+              onAddLocation={handleAddLocation}
+              onFetchCurrentLocation={handleFetchCurrentLocation}
+              loading={loading}
+            />
           </div>
         </div>
         <div className="absoulte top-0 h-full">

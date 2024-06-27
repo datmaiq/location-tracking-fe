@@ -138,7 +138,7 @@ export default function Header() {
               <span>My Profile</span>
             </Link>
             <Link
-              onCslick={() => {
+              onClick={() => {
                 setMenuOpen(false);
               }}
               to="/add-location"
@@ -147,7 +147,7 @@ export default function Header() {
               Add Location
             </Link>
             <Link
-              onCslick={() => {
+              onClick={() => {
                 setMenuOpen(false);
               }}
               to="/chat"
