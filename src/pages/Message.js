@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import useAuth from "../hooks/useAuth";
 import axios from "axios";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import AppContext from "../utils/AppContext";
 
 const Message = () => {
@@ -82,7 +82,7 @@ const Message = () => {
       const chat = res.data;
 
       if (chat) {
-        fetchMessages(chat._id);
+        await fetchMessages(chat._id);
       } else {
         const newChatRes = await axios.post(`${serverURL}/chat`, {
           senderId: authUser._id,

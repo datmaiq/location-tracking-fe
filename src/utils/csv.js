@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 import axios from "axios";
 import { toast } from "react-toastify";
-import serverURL from "./urls";
+import { serverURL } from "./urls";
 
 const getCsvData = async (dataType) => {
   const authToken = Cookies.get("authToken");

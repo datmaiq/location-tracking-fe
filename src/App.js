@@ -14,7 +14,8 @@ import { applyDarkMapStyles, removeDarkMapStyles } from "./utils/map";
 import UserLocation from "./pages/UserLocation";
 import Message from "./pages/Message";
 import io from "socket.io-client";
-import serverURL from "./utils/urls";
+import { serverURL } from "./utils/urls";
+import MapComponent from "./components/MapComponent";
 
 const socket = io(serverURL);
 
@@ -72,6 +73,7 @@ function App() {
             <Route path="my-friends" element={<MyFriends />} />
             <Route path="profile/:username" element={<UserLocation />} />
             <Route path="chat" element={<Message />} />
+            <Route path="map" element={<MapComponent />} />
             <Route path="*" element={<NoPage />} />{" "}
           </Route>
         </Routes>

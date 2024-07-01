@@ -1,7 +1,7 @@
 import axios from "axios";
 import { FaCircleInfo, FaLocationDot } from "react-icons/fa6";
 import { useState } from "react";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import { FaSpinner } from "react-icons/fa";
 export default function Autocomplete({
   onAddLocation,

@@ -5,7 +5,7 @@ import useAuth from "../hooks/useAuth";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-import serverURL from "../utils/urls";
+import { serverURL, reverseGeocodeURL } from "../utils/urls";
 import { useNavigate } from "react-router-dom";
 import AppContext from "../utils/AppContext";
 
@@ -50,7 +50,7 @@ export default function AddLocation() {
   const reverseGeocode = async (latitude, longitude) => {
     try {
       const { data } = await axios.get(
-        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+        `${reverseGeocodeURL}&lat=${latitude}&lon=${longitude}`
       );
       return data.display_name;
     } catch (error) {

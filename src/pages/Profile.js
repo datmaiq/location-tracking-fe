@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import { BsFillEnvelopeFill, BsLinkedin, BsCamera } from "react-icons/bs";

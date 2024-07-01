@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import AppContext from "../utils/AppContext";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import { applyDarkMapStyles, removeDarkMapStyles } from "../utils/map";
 
 export default function useAuth() {

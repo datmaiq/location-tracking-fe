@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import EditLocationModal from "../components/EditLocationModal";
 import MyLocationsDetails from "../components/MyLocationsDetails";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 
 export default function MyLocations() {
   const [open, setOpen] = useState(false);

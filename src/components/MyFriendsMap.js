@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import Leaflet from "leaflet";
 import { toast } from "react-toastify";
 import { FaFileCsv } from "react-icons/fa";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import useAuth from "../hooks/useAuth";
 import getCsvData from "../utils/csv";
 import DownloadMap from "../utils/downloadmap";

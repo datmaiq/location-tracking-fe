@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import Leaflet from "leaflet";
 import useAuth from "../hooks/useAuth";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import Loader from "../components/Loader";
 
 export default function UserLocation() {

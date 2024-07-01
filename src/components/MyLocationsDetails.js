@@ -13,7 +13,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import getCsvData from "../utils/csv";
 import useAuth from "../hooks/useAuth";
 import DownloadMap from "../utils/downloadmap";

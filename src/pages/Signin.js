@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-import serverURL from "../utils/urls";
+import { serverURL } from "../utils/urls";
 import AppContext from "../utils/AppContext";
 import ButtonLoader from "../components/ButtonLoader";
 
