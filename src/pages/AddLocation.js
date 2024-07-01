@@ -91,6 +91,7 @@ export default function AddLocation() {
             <Autocomplete
               onAddLocation={handleAddLocation}
               onFetchCurrentLocation={handleFetchCurrentLocation}
+              showCurrentLocationButton={true}
               loading={loading}
             />
           </div>

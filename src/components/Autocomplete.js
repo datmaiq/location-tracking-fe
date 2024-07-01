@@ -7,6 +7,7 @@ export default function Autocomplete({
   onAddLocation,
   onFetchCurrentLocation,
   loading,
+  showCurrentLocationButton,
 }) {
   const [locations, setLocations] = useState([]);
   const [locationInput, setLocationInput] = useState("");
@@ -47,13 +48,15 @@ export default function Autocomplete({
   return (
     <div className="flex flex-col space-y-5">
       <div className="relative h-12 w-full">
-        <button
-          className="absolute right-3 top-1 bg-inherit text-slate-500 py-1 px-2 rounded"
-          onClick={onFetchCurrentLocation}
-          disabled={loading}
-        >
-          {loading ? <FaSpinner className="animate-spin" /> : "📍"}
-        </button>
+        {showCurrentLocationButton && (
+          <button
+            className="absolute right-3 top-1 bg-inherit text-slate-500 py-1 px-2 rounded"
+            onClick={onFetchCurrentLocation}
+            disabled={loading}
+          >
+            {loading ? <FaSpinner className="animate-spin" /> : "📍"}
+          </button>
+        )}
         <input
           type="text"
           value={locationInput}

@@ -136,7 +136,10 @@ function Signup() {
               <option value="female">Female</option>
             </select>
           </div>
-          <Autocomplete onAddLocation={handleAddCurrentLocation} />
+          <Autocomplete
+            onAddLocation={handleAddCurrentLocation}
+            showCurrentLocationButton={false}
+          />
           {loading ? (
             <ButtonLoader />
           ) : (
