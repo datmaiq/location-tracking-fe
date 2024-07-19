@@ -77,7 +77,6 @@ export default function MyLocationsDetails({ handleSelectLocationForUpdate }) {
 
   const handleDeleteLocation = async (locationToDelete) => {
     const authToken = Cookies.get("authToken");
-    console.log(authToken);
 
     try {
       await axios.delete(`${serverURL}/locations/${locationToDelete?._id}`, {

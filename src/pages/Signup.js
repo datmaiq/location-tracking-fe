@@ -56,9 +56,12 @@ function Signup() {
       setLoading(false);
       return;
     }
-
-    if (!username.trim() || !password.trim() || !gender) {
-      setInputError("Please fill in required fields");
+    if (
+      !currentLocation.name ||
+      !currentLocation.latitude ||
+      !currentLocation.longitude
+    ) {
+      setInputError("Please select your current location");
       setLoading(false);
       return;
     }
@@ -87,6 +90,7 @@ function Signup() {
       navigate("/profile");
     }
   }, [isLoggedIn, navigate]);
+
   return (
     <div className="pt-5 text-black dark:text-white">
       <h1 className="text-center font-bold text-3xl my-5">Signup</h1>
