@@ -15,6 +15,7 @@ function Signup() {
   const [userDetails, setUserDetails] = useState({
     username: "",
     password: "",
+    confirmPassword: "",
     gender: "",
     currentLocation: {},
   });
@@ -39,7 +40,8 @@ function Signup() {
     e.preventDefault();
     setInputError("");
 
-    const { username, password, gender, currentLocation } = userDetails;
+    const { username, password, confirmPassword, gender, currentLocation } =
+      userDetails;
 
     if (!username.trim()) {
       setInputError("Please enter a username");
@@ -48,6 +50,11 @@ function Signup() {
     }
     if (!password.trim() || password.length <= 6) {
       setInputError("Please enter a password with more than 6 characters");
+      setLoading(false);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setInputError("Passwords do not match");
       setLoading(false);
       return;
     }
@@ -121,6 +128,19 @@ function Signup() {
             </label>
             <input
               onChange={(e) => handleInputChange("password", e.target.value)}
+              type="password"
+              className=" border-border_color border p-2 rounded text-slate-400"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label>
+              Confirm Password
+              <span className="text-red-500">*</span>
+            </label>
+            <input
+              onChange={(e) =>
+                handleInputChange("confirmPassword", e.target.value)
+              }
               type="password"
               className=" border-border_color border p-2 rounded text-slate-400"
             />
