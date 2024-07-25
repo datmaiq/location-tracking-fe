@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import Leaflet from "leaflet";
 import useAuth from "../hooks/useAuth";
 import { serverURL } from "../utils/urls";
@@ -44,12 +44,24 @@ export default function UserLocation() {
     userDetails?.currentLocation?.latitude !== null &&
     userDetails?.currentLocation?.longitude !== null;
 
+  function ZoomToMarker({ position }) {
+    const map = useMap();
+
+    useEffect(() => {
+      if (position) {
+        map.setView(position, 13);
+      }
+    }, [position, map]);
+
+    return null;
+  }
+
   return (
     <div className="p-3 h-screen lg:p-10 py-10 dark:text-white border mt-10">
       {loading ? (
         <Loader />
       ) : userDetails ? (
-        <div className="h-screen w-full  flex flex-col ">
+        <div className="h-screen w-full flex flex-col">
           <div className="h-1/6">
             <p className="my-3">
               This user has{" "}
@@ -79,32 +91,40 @@ export default function UserLocation() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
               {isValidLocation && (
-                <Marker
-                  key={userDetails?._id}
-                  className="text-white dark:bg-red-500 leaflet-marker"
-                  position={[
-                    userDetails.currentLocation.latitude,
-                    userDetails.currentLocation.longitude,
-                  ]}
-                  icon={markerIcon}
-                >
-                  <Popup>
-                    <div className="flex flex-col w-full">
-                      <div>
-                        <span className="font-bold text-primary-500">
-                          Name:{" "}
-                        </span>
-                        <span>{userDetails?.username}</span>
+                <>
+                  <Marker
+                    key={userDetails?._id}
+                    className="text-white dark:bg-red-500 leaflet-marker"
+                    position={[
+                      userDetails.currentLocation.latitude,
+                      userDetails.currentLocation.longitude,
+                    ]}
+                    icon={markerIcon}
+                  >
+                    <Popup>
+                      <div className="flex flex-col w-full">
+                        <div>
+                          <span className="font-bold text-primary-500">
+                            Name:{" "}
+                          </span>
+                          <span>{userDetails?.username}</span>
+                        </div>
+                        <div>
+                          <span className="text-primary-500">
+                            Current location:
+                          </span>{" "}
+                          <span>{userDetails?.currentLocation?.name}</span>
+                        </div>
                       </div>
-                      <div>
-                        <span className="text-primary-500">
-                          current location:
-                        </span>{" "}
-                        <span>{userDetails?.currentLocation?.name}</span>
-                      </div>
-                    </div>
-                  </Popup>
-                </Marker>
+                    </Popup>
+                  </Marker>
+                  <ZoomToMarker
+                    position={[
+                      userDetails.currentLocation.latitude,
+                      userDetails.currentLocation.longitude,
+                    ]}
+                  />
+                </>
               )}
             </MapContainer>
           </div>
