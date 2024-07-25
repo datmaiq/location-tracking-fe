@@ -240,6 +240,30 @@ export default function Profile() {
               </div>
             </div>
           </div>
+          <div className="p-6">
+            <h3 className="text-lg font-semibold mb-3">
+              Connections ({authUser?.friends?.length || 0})
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {authUser?.friends?.map((friend) => (
+                <Link key={friend._id} to={`/profile/${friend.username}`}>
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow flex flex-col items-center">
+                    <img
+                      className="w-20 h-20 rounded-full mb-3"
+                      src={
+                        friend.profileBanner ||
+                        "https://via.placeholder.com/150"
+                      }
+                      alt={`${friend.username}'s avatar`}
+                    />
+                    <p className="text-center text-sm font-semibold">
+                      {friend.username}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>
