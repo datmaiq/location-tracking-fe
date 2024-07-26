@@ -61,37 +61,8 @@ As a user, I want to:
 - **react-copy-to-clipboard:** Provides copying text to the clipboard functionality.
 - **leaflet:** Library for interactive maps.
 - **leaflet-easyprint:** Adds printing capabilities to Leaflet maps.
-- # **leaflet.bigimage:** Handles large image overlays on Leaflet maps.
-  Location Tracking FE
-  Project Description
-  The "Location Tracking FE" project provides a front-end interface for tracking user locations and interacting with friends. Key features include real-time location tracking on a map, adding locations, adding friends, light and dark themes, and real-time chat using socket.io. The application integrates with location APIs for accurate tracking.
+- **leaflet.bigimage:** Handles large image overlays on Leaflet maps.
 
-User Stories
-As a user, I want to:
+## Demo
 
-User stories As a user, I want to see my current location and places I've been to on a real-time map to track my location and see if my friends have been there or are there to visit. meet up so I can text real-time on the app to make an appointment or ask about what's special about that place so I can go
-Setup Instructions
-Clone the Repository:
-
-git clone https://github.com/datmaiq/location-tracking-fe.git
-Navigate to the Project Directory:
-
-cd location-tracking-fe
-Install Dependencies:
-
-npm install
-Run the Application:
-
-npm start
-Technologies Used
-React Router: Manages application routes.
-Tailwind CSS: Styles the application.
-axios: HTTP client for API requests.
-Mapbox GL JS: Displays interactive maps.
-socket.io-client: Enables real-time chat functionality.
-three: JavaScript 3D library.
-three-globe: Adds 3D globe rendering to Three.js.
-react-copy-to-clipboard: Facilitates copying text to the clipboard.
-leaflet: Library for interactive maps.
-leaflet-easyprint: Adds printing capabilities to Leaflet maps.
-leaflet.bigimage: Handles large image overlays on Leaflet maps.
+You can see the project in action at [Location Tracking FE Demo](https://quocdat-location-tracking.netlify.app/).
