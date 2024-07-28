@@ -21,7 +21,6 @@ export default function Profile() {
       navigate("/signin");
     }
   }, [isLoggedIn, navigate]);
-
   const handleFileChange = async (event, field) => {
     const file = event.target.files[0];
     if (file) {
@@ -40,7 +39,22 @@ export default function Profile() {
         );
 
         const { user } = data;
-        setAuthUser(user);
+
+        // Update only the relevant field
+        setAuthUser((prevAuthUser) => {
+          if (field === "avatar") {
+            return {
+              ...prevAuthUser,
+              profileBannerId: user.profileBannerId,
+            };
+          } else if (field === "coverPhoto") {
+            return {
+              ...prevAuthUser,
+              coverPhotoId: user.coverPhotoId,
+            };
+          }
+          return prevAuthUser;
+        });
 
         toast.success(
           `${
